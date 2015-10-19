@@ -1,7 +1,12 @@
 import java.io.*; 
 import java.net.*; 
 
-class TCPServer { 
+class TCPServer extends TCPRouter{ 
+	public TCPServer(int[] costTable, int routerID, boolean up2Date) {
+		super(costTable, routerID, up2Date);
+		// TODO Auto-generated constructor stub
+	}
+
 	public static void main(String argv[]) throws Exception{ 
 		String clientSentence; 
 		String capitalizedSentence; 
