@@ -3,8 +3,8 @@ import java.net.*;
 
 
 public class TCPRouter{
-	public static String[] hostnames = {"192.168.1.143", "192.168.1.121", null, null}; // Router0 will be my laptop (client), Router1 will be my desktop (server), Router2 will be something on AFS (not yet implemented, Router3 will be something on OSL (not yet implemented)
-	public static int[] ports = {54321, 12345, -1, -1};
+	public static String[] hostnames = {"http://192.168.1.143", "http://192.168.1.121", null, null}; // Router0 will be my laptop (client), Router1 will be my desktop (server), Router2 will be something on AFS (not yet implemented, Router3 will be something on OSL (not yet implemented)
+	public static int[] ports = {11111, 12345, -1, -1};
 	
 	protected Socket socket = null;
 	private int[] costTable;
