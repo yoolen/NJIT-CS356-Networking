@@ -40,19 +40,7 @@ public class TCPRouter{
 	}
 	
 	public void send(){
-		try {
-			OutputStream os = this.socket.getOutputStream();
-			OutputStreamWriter osw = new OutputStreamWriter(os);
-			BufferedWriter bw = new BufferedWriter(osw);
-			bw.write(String.valueOf(this.routerID) + '\n');
-			for(int cost: this.costTable){
-				bw.write(String.valueOf(cost) + '\n');
-			}
-			bw.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 	}
 	
