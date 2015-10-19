@@ -13,6 +13,10 @@ public class Router0 {
 			int[] costTable = {0, 1, 3, 7};
 			
 			TCPRouter router0 = new TCPRouter(costTable, 0, false);
+			router0.connect(TCPRouter.hostnames[1], TCPRouter.ports[1]);
+			router0.send();
+			router0.listen();
+			router0.disconnect();
 			
 		// Open a connection to each router on the network and send own router number and initial least known cost
 			

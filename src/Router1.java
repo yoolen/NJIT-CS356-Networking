@@ -1,23 +1,29 @@
+import java.io.*;
 
 public class Router1 {
 	// This will act as the server
 			public static void main(String argv[]) throws Exception{
 				
 			// Begin by preparing table of initial costs
+				int[] costTable = {1, 0, 1, -1}; // a value of -1 indicates no connection
+								
+				TCPServer router1 = new TCPServer(costTable, 1, false);
 				
-				int[] costTable = {0, 1, 3, 7};
+				router1.setSsocket(12345);
 				
-				TCPRouter router0 = new TCPRouter(costTable, 0, false);
-				
-			// Open a connection to each router on the network and send own router number and initial least known cost
-				
-				
+				while(true){
+					System.out.println("Listening...");
+					router1.setSocket();
+					router1.listen();
+					router1.send();
+				}
+						
 				
 			// Wait for reply from server
-				System.out.println(router0);
-				
-				String sentence; 
-		        String modifiedSentence; 
+//				System.out.println(router1);
+//				
+//				String sentence; 
+//		        String modifiedSentence; 
 	//
 //		        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
 //		        Socket clientSocket = new Socket("hostname", 6789); 
