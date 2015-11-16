@@ -17,7 +17,7 @@ public class Router0 {
 			printTable(thisRouterID, costTableLocal);
 
 			// Create connection to server
-			socket = new Socket("192.168.0.143", 12345);
+			socket = new Socket("192.168.0.121", 12345);
 
 			
 			
