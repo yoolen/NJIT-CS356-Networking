@@ -2,7 +2,7 @@ import java.lang.*;
 import java.io.*;
 import java.net.*;
 
-public class Router1 {
+public class Router3 {
 	public static void main(String args[]) {
 		int routerID = 1;
 		int connectID;

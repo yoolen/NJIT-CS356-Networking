@@ -5,26 +5,26 @@ import java.net.*;
 
 public class Router0 {
 	public static void main(String args[]) {
-		int routerID = 0;
-		int connectID;
-		int[] costTableLocal = {0, 1, 4, 7};
+		int thisRouterID = 0;
+		int thatRouterID;
+		int[] costTableLocal = {0, 1, 3, 7};
 		int[] costTableRemote = null;
 		Socket socket = null;
 
 		try {
 			// First print local table
 			System.out.println("Initial status:");
-			printTable(routerID, costTableLocal);
+			printTable(thisRouterID, costTableLocal);
 
 			// Create connection to server
-			socket = new Socket("192.168.0.121", 12345);
+			socket = new Socket("192.168.0.143", 12345);
 
 			
 			
 			// Send table to router1
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			//send routing table over to server
-			bw.write(String.valueOf(routerID) + "\n");
+			bw.write(String.valueOf(thisRouterID) + "\n");
 			for(int i: costTableLocal){
 				bw.write(String.valueOf(i) + "\n");	
 			}
@@ -36,7 +36,7 @@ public class Router0 {
 			// Read	from router1
 			BufferedReader buffRead = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			//received routing table from other router
-			connectID = Integer.parseInt(buffRead.readLine());
+			thatRouterID = Integer.parseInt(buffRead.readLine());
 			costTableRemote = new int[4];
 			for(int i = 0; i < 4; i++){
 				String in = buffRead.readLine();
@@ -44,8 +44,23 @@ public class Router0 {
 			}
 
 			System.out.println("Server data received!\n");
-			printTable(connectID, costTableRemote);
+			//printTable(thatRouterID, costTableRemote);
 
+			// Update original table with new values
+			System.out.println("Calculating new distances...\n");
+			for(int i = 0; i < costTableRemote.length; i++){
+				// check values in other table (-1 means infinity so don't do anything)
+				if(costTableRemote[i] == -1){
+					continue;
+				} else if(costTableLocal[1] + costTableRemote[i] < costTableLocal[i]){
+					costTableLocal[i] = costTableLocal[1] + costTableRemote[i];
+				}
+			}
+			
+			// Print out updated table
+			System.out.println("New distances:");
+			printTable(thisRouterID, costTableLocal);
+			
 			bw.close();
 		} catch(Exception e) {
 			System.out.print("Whoops! Client didn't work!\n");
