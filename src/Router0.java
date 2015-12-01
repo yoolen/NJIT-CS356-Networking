@@ -52,8 +52,8 @@ public class Router0 {
 				// check values in other table (-1 means infinity so don't do anything)
 				if(costTableRemote[i] == -1){
 					continue;
-				} else if(costTableLocal[1] + costTableRemote[i] < costTableLocal[i]){
-					costTableLocal[i] = costTableLocal[1] + costTableRemote[i];
+				} else if(costTableLocal[thatRouterID] + costTableRemote[i] < costTableLocal[i]){
+					costTableLocal[i] = costTableLocal[thatRouterID] + costTableRemote[i];
 				}
 			}
 			
