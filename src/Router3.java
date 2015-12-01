@@ -4,7 +4,7 @@ import java.net.*;
 
 public class Router3 {
 	public static void main(String args[]) {
-		int routerID = 1;
+		int routerID = 3;
 		int connectID;
 		int[] costTableLocal = {1, 0, 1, -1};
 		int[] costTableRemote = null;
@@ -12,8 +12,9 @@ public class Router3 {
 		Socket socket = null;
 
 		try {
+			srvr = new ServerSocket(TCPRouter.ports[routerID]);
 			while(true){
-				srvr = new ServerSocket(12345);
+				
 				System.out.println("Waiting on client...");
 				socket = srvr.accept();
 				System.out.print("Server has connected!\n");
@@ -26,15 +27,29 @@ public class Router3 {
 					String in = buffRead.readLine();
 					costTableRemote[i] = Integer.parseInt(in);
 				}
-
+				
 				// Send table to router0
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				//send routing table over to server
 				bw.write(String.valueOf(routerID) + "\n");
-				for(int i: costTableLocal){
-					bw.write(String.valueOf(i) + "\n");	
+				for(int j: costTableLocal){
+					bw.write(String.valueOf(j) + "\n");	
 				}
 				bw.flush();
+				
+				// Update original table with new values
+				System.out.println("Calculating new distances...\n");
+				for(int k = 0; k < costTableRemote.length; k++){
+					// check values in other table (-1 means infinity so don't do anything)
+					if(costTableRemote[k] == -1){
+						continue;
+					} else if(costTableLocal[k] + costTableRemote[k] < costTableLocal[k]){
+						costTableLocal[k] = costTableLocal[k] + costTableRemote[k];
+					}
+				}
+				
+				System.out.println("Updated local table:");
+				printTable(routerID,costTableLocal);
 			}
 		} catch(Exception e) {
 			System.out.print("Whoops! Server didn't work!\n");
