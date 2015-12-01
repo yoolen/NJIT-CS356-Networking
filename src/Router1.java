@@ -12,9 +12,11 @@ public class Router1 {
 		Socket socket = null;
 
 		try {
+			srvr = new ServerSocket(12345);
+			System.out.println("Waiting on client...");
+			
+			// Keep this running
 			while(true){
-				srvr = new ServerSocket(12345);
-				System.out.println("Waiting on client...");
 				socket = srvr.accept();
 				System.out.print("Server has connected!\n");
 
